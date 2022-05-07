@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  volo.blogging.app:
+    image: ${DOCKER_REGISTRY-}volobloggingapp
+    build:
+      context: .
+      dockerfile: blogging/Volo.Blogging.App/Dockerfile

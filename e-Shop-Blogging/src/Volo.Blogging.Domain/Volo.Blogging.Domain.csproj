@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <PropertyGroup>
+	<TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>Volo.Blogging.Domain</AssemblyName>
+    <PackageId>Volo.Blogging.Domain</PackageId>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\modules\identity\src\Volo.Abp.Identity.Domain\Volo.Abp.Identity.Domain.csproj" />
+    <ProjectReference Include="..\Volo.Blogging.Domain.Shared\Volo.Blogging.Domain.Shared.csproj" />
+    <ProjectReference Include="..\..\..\modules\users\src\Volo.Abp.Users.Domain\Volo.Abp.Users.Domain.csproj" />
+    <ProjectReference Include="..\..\..\framework\src\Volo.Abp.AutoMapper\Volo.Abp.AutoMapper.csproj" />
+    <ProjectReference Include="..\..\..\framework\src\Volo.Abp.Ddd.Domain\Volo.Abp.Ddd.Domain.csproj" />
+    <ProjectReference Include="..\..\..\framework\src\Volo.Abp.Caching\Volo.Abp.Caching.csproj" />
+    <PackageReference Include="Dapr.Actors" Version="1.6.0" />
+    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.6.0" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.6.0" />
+    <PackageReference Include="Dapr.Extensions.Configuration" Version="1.6.0" />
+  </ItemGroup>
+
+</Project>

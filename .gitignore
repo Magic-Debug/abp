@@ -323,3 +323,8 @@ deploy/npm-auth-token.txt
 deploy/ssh-password.txt
 deploy/github-api-key.txt
 deploy/_run_all_log.txt
+/modules/blogging/src/Volo.Blogging.Admin.Web/Properties/launchSettings.json
+/modules/blogging/src/Volo.Blogging.Web/Properties/launchSettings.json
+/modules/docs/src/Volo.Docs.Admin.Web/Properties/launchSettings.json
+/modules/docs/src/Volo.Docs.Web/Properties/launchSettings.json
+/modules/account/src/Volo.Abp.Account.Web/Logs/logs.txt

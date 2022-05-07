@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mongo2Go" Version="$(Mongo2GoPackageVersion)" />
+    <ProjectReference Include="..\Volo.Blogging.TestBase\Volo.Blogging.TestBase.csproj" />
+  </ItemGroup>
+
+</Project>
