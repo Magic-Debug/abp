@@ -3,16 +3,15 @@ using Volo.Abp.Ui.Branding;
 using Volo.Abp.DependencyInjection;
 using Volo.Blogging.Localization;
 
-namespace Volo.BloggingTestApp.Branding
+namespace Volo.Blogging.App.Branding;
+
+[Dependency(ReplaceServices = true)]
+public class BloggingTestAppBrandingProvider : DefaultBrandingProvider
 {
-    [Dependency(ReplaceServices = true)]
-    public class BloggingTestAppBrandingProvider : DefaultBrandingProvider
+    public IHtmlLocalizer<BloggingResource> L { get; set; }
+    public BloggingTestAppBrandingProvider(IHtmlLocalizer<BloggingResource> localizer)
     {
-        public IHtmlLocalizer<BloggingResource> L { get; set; }
-        public BloggingTestAppBrandingProvider(IHtmlLocalizer<BloggingResource> localizer)
-        {
-            L = localizer;
-        }
-        public override string AppName => L["Blogs"].Value;
+        L = localizer;
     }
+    public override string AppName => L["Blogs"].Value;
 }

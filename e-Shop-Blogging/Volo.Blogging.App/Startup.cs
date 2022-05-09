@@ -2,20 +2,18 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Volo.Blogging.App;
 
-namespace Volo.BloggingTestApp
+namespace Volo.Blogging.App;
+
+public class Startup
 {
-    public class Startup
+    public void ConfigureServices(IServiceCollection services)
     {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddApplication<BloggingTestAppModule>();
-        }
+        services.AddApplication<BloggingTestAppModule>();
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
-        {
-            app.InitializeApplication();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+    {
+        app.InitializeApplication();
     }
 }

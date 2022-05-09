@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.BloggingTestApp.EntityFrameworkCore;
+using Volo.Blogging.App.EntityFrameworkCore;
 
 #nullable disable
 

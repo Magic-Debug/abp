@@ -3,22 +3,21 @@ using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Blogging.EntityFrameworkCore;
 
-namespace Volo.BloggingTestApp.EntityFrameworkCore
+namespace Volo.Blogging.App.EntityFrameworkCore;
+
+public class BloggingTestAppDbContext : AbpDbContext<BloggingTestAppDbContext>
 {
-    public class BloggingTestAppDbContext : AbpDbContext<BloggingTestAppDbContext>
+    public BloggingTestAppDbContext(DbContextOptions<BloggingTestAppDbContext> options)
+        : base(options)
     {
-        public BloggingTestAppDbContext(DbContextOptions<BloggingTestAppDbContext> options)
-            : base(options)
-        {
 
-        }
+    }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ConfigureBlogging();
-            modelBuilder.ConfigureBlobStoring();
-        }
+        modelBuilder.ConfigureBlogging();
+        modelBuilder.ConfigureBlobStoring();
     }
 }

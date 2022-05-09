@@ -26,141 +26,140 @@ using Volo.Abp.Threading;
 using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Blogging.Admin;
-using Volo.BloggingTestApp.EntityFrameworkCore;
+using Volo.Blogging.App.EntityFrameworkCore;
 
-namespace Volo.Blogging.App
+namespace Volo.Blogging.App;
+
+[DependsOn(
+    typeof(BloggingWebModule),
+    typeof(BloggingApplicationModule),
+    typeof(BloggingHttpApiModule),
+    typeof(BloggingAdminWebModule),
+    typeof(BloggingAdminHttpApiModule),
+    typeof(BloggingAdminApplicationModule),
+
+    typeof(BloggingTestAppEntityFrameworkCoreModule),
+    typeof(BlobStoringDatabaseDomainModule),
+    typeof(AbpAutofacModule),
+    typeof (AbpCachingStackExchangeRedisModule),
+    typeof(AbpAspNetCoreMvcUiBasicThemeModule)
+)]
+public class BloggingTestAppModule : AbpModule
 {
-    [DependsOn(
-        typeof(BloggingWebModule),
-        typeof(BloggingApplicationModule),
-        typeof(BloggingHttpApiModule),
-        typeof(BloggingAdminWebModule),
-        typeof(BloggingAdminHttpApiModule),
-        typeof(BloggingAdminApplicationModule),
-
-        typeof(BloggingTestAppEntityFrameworkCoreModule),
-        typeof(BlobStoringDatabaseDomainModule),
-        typeof(AbpAutofacModule),
-        typeof (AbpCachingStackExchangeRedisModule),
-        typeof(AbpAspNetCoreMvcUiBasicThemeModule)
-    )]
-    public class BloggingTestAppModule : AbpModule
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
+        IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
+        IConfiguration configuration = context.Services.GetConfiguration();
+        ConfigureCache();
+        Configure<BloggingUrlOptions>(options =>
         {
-            var hostingEnvironment = context.Services.GetHostingEnvironment();
-            var configuration = context.Services.GetConfiguration();
-            ConfigureCache();
-            Configure<BloggingUrlOptions>(options =>
-            {
-                options.RoutePrefix = null;
-            });
+            options.RoutePrefix = null;
+        });
 
-            Configure<AbpDbConnectionOptions>(options =>
-            {
-                const string connStringName = "SqlServer";
-                options.ConnectionStrings.Default = configuration.GetConnectionString(connStringName);
-            });
+        Configure<AbpDbConnectionOptions>(options =>
+        {
+            const string connStringName = "SqlServer";
+            options.ConnectionStrings.Default = configuration.GetConnectionString(connStringName);
+        });
 
-            Configure<AbpDbContextOptions>(options =>
+        Configure<AbpDbContextOptions>(options =>
+        {
+            options.UseSqlServer();
+        });
+        if (!hostingEnvironment.IsDevelopment())
+        {
+            Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.UseSqlServer();
-            });
-            if (!hostingEnvironment.IsDevelopment())
-            {
-                Configure<AbpVirtualFileSystemOptions>(options =>
-                {
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpUiModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}..{0}framework{0}src{0}Volo.Abp.UI", Path.DirectorySeparatorChar)));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}framework{0}src{0}Volo.Abp.AspNetCore.Mvc.UI", Path.DirectorySeparatorChar)));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiBootstrapModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}framework{0}src{0}Volo.Abp.AspNetCore.Mvc.UI.Bootstrap", Path.DirectorySeparatorChar)));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiThemeSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}framework{0}src{0}Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared", Path.DirectorySeparatorChar)));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiBasicThemeModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}modules{0}basic-theme{0}src{0}Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic", Path.DirectorySeparatorChar)));
-                    options.FileSets.ReplaceEmbeddedByPhysical<BloggingDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}src{0}Volo.Blogging.Domain", Path.DirectorySeparatorChar)));
-                    options.FileSets.ReplaceEmbeddedByPhysical<BloggingWebModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}src{0}Volo.Blogging.Web", Path.DirectorySeparatorChar)));
-                });
-            }
-
-            context.Services.AddSwaggerGen(
-                options =>
-                {
-                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Blogging API", Version = "v1" });
-                    options.DocInclusionPredicate((docName, description) => true);
-                    options.CustomSchemaIds(type => type.FullName);
-                });
-
-            var cultures = new List<CultureInfo>
-            {
-                new CultureInfo("cs"),
-                new CultureInfo("en"),
-                new CultureInfo("zh-Hans")
-            };
-
-            Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("en");
-                options.SupportedCultures = cultures;
-                options.SupportedUICultures = cultures;
-            });
-
-            Configure<AbpThemingOptions>(options =>
-            {
-                options.DefaultThemeName = BasicTheme.Name;
-            });
-
-            Configure<AbpBlobStoringOptions>(options =>
-            {
-                options.Containers.ConfigureDefault(container =>
-                {
-                    container.UseDatabase();
-                });
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpUiModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}..{0}framework{0}src{0}Volo.Abp.UI", Path.DirectorySeparatorChar)));
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}framework{0}src{0}Volo.Abp.AspNetCore.Mvc.UI", Path.DirectorySeparatorChar)));
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiBootstrapModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}framework{0}src{0}Volo.Abp.AspNetCore.Mvc.UI.Bootstrap", Path.DirectorySeparatorChar)));
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiThemeSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}framework{0}src{0}Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared", Path.DirectorySeparatorChar)));
+                options.FileSets.ReplaceEmbeddedByPhysical<AbpAspNetCoreMvcUiBasicThemeModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}modules{0}basic-theme{0}src{0}Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic", Path.DirectorySeparatorChar)));
+                options.FileSets.ReplaceEmbeddedByPhysical<BloggingDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}src{0}Volo.Blogging.Domain", Path.DirectorySeparatorChar)));
+                options.FileSets.ReplaceEmbeddedByPhysical<BloggingWebModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}src{0}Volo.Blogging.Web", Path.DirectorySeparatorChar)));
             });
         }
 
+        context.Services.AddSwaggerGen(
+            options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Blogging API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
+                options.CustomSchemaIds(type => type.FullName);
+            });
 
-        private void ConfigureCache()
+        List<CultureInfo> cultures = new List<CultureInfo>
         {
-            Configure<AbpDistributedCacheOptions>(options =>
-            {
-                options.KeyPrefix = "Blogging:";
-            });
-        }
-        public override void OnApplicationInitialization(ApplicationInitializationContext context)
+            new CultureInfo("cs"),
+            new CultureInfo("en"),
+            new CultureInfo("zh-Hans")
+        };
+
+        Configure<RequestLocalizationOptions>(options =>
         {
-            IApplicationBuilder app = context.GetApplicationBuilder();
+            options.DefaultRequestCulture = new RequestCulture("cs");
+            options.SupportedCultures = cultures;
+            options.SupportedUICultures = cultures;
+        });
 
-            if (context.GetEnvironment().IsDevelopment())
+        Configure<AbpThemingOptions>(options =>
+        {
+            options.DefaultThemeName = BasicTheme.Name;
+        });
+
+        Configure<AbpBlobStoringOptions>(options =>
+        {
+            options.Containers.ConfigureDefault(container =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseErrorPage();
-            }
-
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+                container.UseDatabase();
             });
+        });
+    }
 
-            app.UseAuthentication();
-            app.UseAuthorization();
 
-            app.UseAbpRequestLocalization();
+    private void ConfigureCache()
+    {
+        Configure<AbpDistributedCacheOptions>(options =>
+        {
+            options.KeyPrefix = "Blogging:";
+        });
+    }
+    public override void OnApplicationInitialization(ApplicationInitializationContext context)
+    {
+        IApplicationBuilder app = context.GetApplicationBuilder();
 
-            app.UseConfiguredEndpoints();
-
-            using IServiceScope scope = context.ServiceProvider.CreateScope();
-            AsyncHelper.RunSync(async () =>
-            {
-                await scope.ServiceProvider
-                    .GetRequiredService<IDataSeeder>()
-                    .SeedAsync();
-            });
+        if (context.GetEnvironment().IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
         }
+        else
+        {
+            app.UseErrorPage();
+        }
+
+        app.UseStaticFiles();
+
+        app.UseRouting();
+
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+        });
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseAbpRequestLocalization();
+
+        app.UseConfiguredEndpoints();
+
+        using IServiceScope scope = context.ServiceProvider.CreateScope();
+        AsyncHelper.RunSync(async () =>
+        {
+            await scope.ServiceProvider
+                .GetRequiredService<IDataSeeder>()
+                .SeedAsync();
+        });
     }
 }
