@@ -1,8 +1,58 @@
 version: '3.4'
 
 services:
-  volo.blogging.app:
-    image: ${DOCKER_REGISTRY-}volobloggingapp
+
+  proxy-ws:
     build:
       context: .
-      dockerfile: blogging/Volo.Blogging.App/Dockerfile
+      dockerfile: Dockerfile-proxy-ws
+    ports:
+    - "10000:10000"
+
+  proxy-wss-wss:
+    build:
+      context: .
+      dockerfile: Dockerfile-proxy-wss
+    ports:
+    - "20000:10000"
+
+  proxy-wss-passthrough:
+    build:
+      context: .
+      dockerfile: Dockerfile-proxy-wss-passthrough
+    ports:
+    - "30000:10000"
+
+  proxy-blogging-app:
+    build:
+      context: .
+      dockerfile: Dockerfile-proxy-blogging_app
+    ports:
+    - "40000:10000"
+    depends_on:
+      - blogging-app
+    volumes:
+      - ./certs/output.pkcs12:/certs/output.pkcs12
+
+  service-ws:
+    image: solsson/websocat
+    hostname: service-ws
+    command: -E ws-listen:0.0.0.0:80 literalreply:'[ws] HELO'
+
+  service-wss:
+    image: solsson/websocat
+    hostname: service-wss
+    command: wss-listen:0.0.0.0:443 literalreply:"[wss] HELO" --pkcs12-der /certs/output.pkcs12
+    volumes:
+    - ./certs/output.pkcs12:/certs/output.pkcs12
+
+  blogging-app:
+    image: ${DOCKER_REGISTRY-}blogging-app
+    build:
+      context: .
+      dockerfile: e-Shop-Blogging/Volo.Blogging.App/Dockerfile
+    ports:
+    - "4443:443"
+    - "8080:80"
+
+
