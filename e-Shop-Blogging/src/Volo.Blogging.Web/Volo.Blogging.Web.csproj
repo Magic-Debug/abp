@@ -41,6 +41,7 @@
     <Content Remove="wwwroot\**\*.js" />
     <Content Remove="wwwroot\**\*.css" />
     <Content Remove="compilerconfig.json" />
+    <None Remove="Pages\Blogs\Shared\Scripts\push.js" />
     <None Include="compilerconfig.json" />
   </ItemGroup>
 

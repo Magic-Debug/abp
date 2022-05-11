@@ -15,9 +15,11 @@
 }
 @section scripts {
     <abp-script-bundle name="@typeof(IndexModel).FullName">
+        <abp-script src="/libs/signalr/browser/signalr.js" />
         <abp-script src="/client-proxies/blogging-proxy.js" />
         <abp-script type="@typeof(OwlCarouselScriptContributor)" />
         <abp-script src="/Pages/Blogs/Shared/Scripts/blog.js" />
+        <abp-script src="/Pages/Blogs/Shared/Scripts/push.js" />
     </abp-script-bundle>
 }
 @section styles {
