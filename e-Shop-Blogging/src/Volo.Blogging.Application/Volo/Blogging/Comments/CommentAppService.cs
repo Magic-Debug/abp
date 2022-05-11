@@ -30,7 +30,7 @@ namespace Volo.Blogging.Comments
             {
                 if (commentDto.CreatorId.HasValue)
                 {
-                    var creatorUser = new IdentityUser(Guid.Empty,"","",Guid.Empty); ; //await UserLookupService.FindByIdAsync(commentDto.CreatorId.Value);
+                    var creatorUser = new IdentityUser(Guid.Empty, "", "", Guid.Empty); ; //await UserLookupService.FindByIdAsync(commentDto.CreatorId.Value);
 
                     if (creatorUser != null && !userDictionary.ContainsKey(creatorUser.Id))
                     {
@@ -41,9 +41,9 @@ namespace Volo.Blogging.Comments
 
             foreach (var commentDto in comments)
             {
+                commentDto.Writer = new BlogUserDto() { Email = $"{Environment.TickCount}@{Environment.CurrentManagedThreadId}", UserName = $"{Environment.CurrentManagedThreadId}", Id = Guid.NewGuid() }; //userDictionary[(Guid)commentDto.CreatorId];
                 if (commentDto.CreatorId.HasValue && userDictionary.ContainsKey((Guid)commentDto.CreatorId))
                 {
-                    commentDto.Writer = userDictionary[(Guid)commentDto.CreatorId];
                 }
             }
 

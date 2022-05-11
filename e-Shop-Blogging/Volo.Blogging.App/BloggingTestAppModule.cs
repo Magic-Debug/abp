@@ -14,6 +14,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Mvc.UI.Theming;
+using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.Autofac;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.BlobStoring.Database;
@@ -37,6 +38,7 @@ namespace Volo.Blogging.App;
     typeof(BloggingAdminWebModule),
     typeof(BloggingAdminHttpApiModule),
     typeof(BloggingAdminApplicationModule),
+    typeof(AbpAspNetCoreSignalRModule),
 
     typeof(BloggingTestAppEntityFrameworkCoreModule),
     typeof(BlobStoringDatabaseDomainModule),
