@@ -4,7 +4,7 @@ namespace Volo.Blogging
 {
     public class BloggingUrlOptions
     {
-        private string _routePrefix = "blog";
+        private string _routePrefix = "/x-blog/";
 
         /// <summary>
         /// Default value: "blog";

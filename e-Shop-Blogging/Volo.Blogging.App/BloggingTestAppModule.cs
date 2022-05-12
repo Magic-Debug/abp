@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
@@ -56,7 +57,7 @@ public class BloggingTestAppModule : AbpModule
         ConfigureCache();
         Configure<BloggingUrlOptions>(options =>
         {
-            options.RoutePrefix = null;
+            options.RoutePrefix = "/x-blog/";
         });
 
         Configure<AbpDbConnectionOptions>(options =>
@@ -82,14 +83,6 @@ public class BloggingTestAppModule : AbpModule
                 options.FileSets.ReplaceEmbeddedByPhysical<BloggingWebModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}src{0}Volo.Blogging.Web", Path.DirectorySeparatorChar)));
             });
         }
-
-        context.Services.AddSwaggerGen(
-            options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Blogging API", Version = "v1" });
-                options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FullName);
-            });
 
         List<CultureInfo> cultures = new List<CultureInfo>
         {
@@ -118,6 +111,7 @@ public class BloggingTestAppModule : AbpModule
             });
         });
         AddCustomAuthentication(context.Services, configuration);
+        AddSwaggerGen(context.Services, configuration);
         AddCustomAuthorization(context.Services);
     }
     private void AddCustomAuthentication(IServiceCollection builder, IConfiguration configuration)
@@ -146,6 +140,34 @@ public class BloggingTestAppModule : AbpModule
         });
     }
 
+    private void AddSwaggerGen(IServiceCollection builder, IConfiguration configuration)
+    {
+        builder.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Blogging API", Version = "v1" });
+            options.DocInclusionPredicate((docName, description) => true);
+            options.CustomSchemaIds(type => type.FullName);
+            string identityUrlExternal = configuration.GetValue<string>("AuthorityUrl");
+
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows()
+                {
+                    Implicit = new OpenApiOAuthFlow()
+                    {
+                        AuthorizationUrl = new Uri($"{identityUrlExternal}/connect/authorize"),
+                        TokenUrl = new Uri($"{identityUrlExternal}/connect/token"),
+                        Scopes = new Dictionary<string, string>()
+                            {
+                                { "blogging", "Blogging API" }
+                            }
+                    }
+                }
+            });
+        });
+
+    }
     private void ConfigureCache()
     {
         Configure<AbpDistributedCacheOptions>(options =>
@@ -173,7 +195,9 @@ public class BloggingTestAppModule : AbpModule
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Blogging API");
+            options.OAuthClientId("Blogging");
+            options.OAuthAppName("Blogging Swagger UI");
         });
 
         app.UseAuthentication();
