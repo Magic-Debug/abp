@@ -37,6 +37,7 @@
     <ProjectReference Include="..\src\Volo.Blogging.Admin.Application\Volo.Blogging.Admin.Application.csproj" />
     <ProjectReference Include="..\src\Volo.Blogging.Admin.Web\Volo.Blogging.Admin.Web.csproj" />
     <ProjectReference Include="..\..\modules\basic-theme\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>

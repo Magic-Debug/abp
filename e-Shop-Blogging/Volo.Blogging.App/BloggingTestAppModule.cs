@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +44,7 @@ namespace Volo.Blogging.App;
     typeof(BloggingTestAppEntityFrameworkCoreModule),
     typeof(BlobStoringDatabaseDomainModule),
     typeof(AbpAutofacModule),
-    typeof (AbpCachingStackExchangeRedisModule),
+    typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpAspNetCoreMvcUiBasicThemeModule)
 )]
 public class BloggingTestAppModule : AbpModule
@@ -116,8 +117,34 @@ public class BloggingTestAppModule : AbpModule
                 container.UseDatabase();
             });
         });
+        AddCustomAuthentication(context.Services, configuration);
+        AddCustomAuthorization(context.Services);
+    }
+    private void AddCustomAuthentication(IServiceCollection builder, IConfiguration configuration)
+    {
+        // Prevent mapping "sub" claim to nameidentifier.
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+
+        builder.AddAuthentication("Bearer")
+            .AddJwtBearer(options =>
+            {
+                options.Audience = "blogging-api";
+                options.Authority = configuration.GetValue<string>("AuthorityUrl");
+                options.RequireHttpsMetadata = false;
+            });
     }
 
+    private void AddCustomAuthorization(IServiceCollection builder)
+    {
+        builder.AddAuthorization(options =>
+        {
+            options.AddPolicy("ApiScope", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim("scope", "blogging");
+            });
+        });
+    }
 
     private void ConfigureCache()
     {
