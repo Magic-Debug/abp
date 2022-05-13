@@ -335,7 +335,7 @@ spec:
       dnsPolicy: ClusterFirst
       containers:
         - name: controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.33.0
+          image: registry.cn-hongkong.aliyuncs.com/gglnp/ingress-nginx-controller:v0.46.0
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
