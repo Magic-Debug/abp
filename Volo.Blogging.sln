@@ -91,6 +91,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{E3B07A09-157
 		k8s\ingress-rules.yaml = k8s\ingress-rules.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "consul", "consul", "{FDF150AE-4FD5-492B-82E5-5E0AB29FF363}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\consul\consul.yaml = k8s\consul\consul.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{12613FA7-888E-4ABE-BC64-E717D5F56BDB}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\grafana\grafana-deploy-svc.yaml = k8s\grafana\grafana-deploy-svc.yaml
+		k8s\grafana\grafana-ing.yaml = k8s\grafana\grafana-ing.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "busybox", "busybox", "{7F5823A2-6E70-488C-A691-2C33C051918D}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\busybox\busybox.yaml = k8s\busybox\busybox.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -270,6 +286,9 @@ Global
 		{A94F048E-FCD4-4AC6-B2EF-15A60B610CEA} = {25B3A516-5C0D-42E3-9294-E8A9346CEE4B}
 		{781918A8-293D-4687-86CA-B675118A1BD7} = {25B3A516-5C0D-42E3-9294-E8A9346CEE4B}
 		{180AC8B7-58A4-4956-B848-940A8B0D8ED7} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
+		{FDF150AE-4FD5-492B-82E5-5E0AB29FF363} = {E3B07A09-1576-41B2-8193-A38622201D46}
+		{12613FA7-888E-4ABE-BC64-E717D5F56BDB} = {E3B07A09-1576-41B2-8193-A38622201D46}
+		{7F5823A2-6E70-488C-A691-2C33C051918D} = {E3B07A09-1576-41B2-8193-A38622201D46}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F2BAE819-78D4-407A-9201-22473B2850B0}
