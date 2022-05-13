@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: shop-blog-ingress # 应用名称
+  namespace: e-shop
+  labels:
+    app: blog-app
+  annotations:
+    metadata.annotations.kubernetes.io/ingress.class: "nginx"  #指定Ingress Resource创建时使用的Ingress Controller，本例使用上述创建的Nginx Controller
+spec:
+  rules:
+    - host: blog.angkor.net # 应用域名
+      http:
+        paths:
+          - path: / # 访问路径
+            backend:
+              serviceName: blog-app #
+              servicePort: 31241 #
+    - host: seq.angkor.net # 应用域名 
+      http:
+        paths:
+          - path: / # 访问路径
+            backend:
+              serviceName: blog-log # service name
+              servicePort: 31242 # servicePort
+    - host: monitor.angkor.net # 应用域名 
+      http:
+        paths:
+          - path: / # 访问路径
+            backend:
+              serviceName: blog-monitor # service name
+              servicePort: 31243 # servicePort
