@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  blogging.client:
+    image: ${DOCKER_REGISTRY-}blogging-client
+    build:
+      context: .
+      dockerfile: src/Blogging.Client/Dockerfile

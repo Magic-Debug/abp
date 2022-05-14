@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Blogging.Client": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
