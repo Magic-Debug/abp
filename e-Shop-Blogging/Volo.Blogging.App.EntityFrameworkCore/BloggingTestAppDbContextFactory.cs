@@ -12,8 +12,7 @@ public class BloggingTestAppDbContextFactory : IDesignTimeDbContextFactory<Blogg
         var configuration = BuildConfiguration();
 
         var builder = new DbContextOptionsBuilder<BloggingTestAppDbContext>()
-            .UseSqlServer(configuration.GetConnectionString("SqlServer"));
-
+            .UseMySql(ServerVersion.AutoDetect(configuration.GetConnectionString("SqlServer")));
         return new BloggingTestAppDbContext(builder.Options);
     }
 

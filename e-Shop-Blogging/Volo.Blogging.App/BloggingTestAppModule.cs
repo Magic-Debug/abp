@@ -68,7 +68,7 @@ public class BloggingTestAppModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer();
+            options.UseMySQL();
         });
         if (!hostingEnvironment.IsDevelopment())
         {
