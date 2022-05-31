@@ -107,6 +107,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "busybox", "busybox", "{7F58
 		k8s\busybox\busybox.yaml = k8s\busybox\busybox.yaml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.Castle.Core", "framework\src\Volo.Abp.Castle.Core\Volo.Abp.Castle.Core.csproj", "{410FC520-1058-44A5-BCC7-0E77B0B7FC07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.BackgroundWorkers", "framework\src\Volo.Abp.BackgroundWorkers\Volo.Abp.BackgroundWorkers.csproj", "{AE74DE5A-42C7-4477-B516-8BB113D1C91C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.Core", "framework\src\Volo.Abp.Core\Volo.Abp.Core.csproj", "{2C3110BF-E93A-4470-B360-9993A4F0C27C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.EntityFrameworkCore.MySQL", "framework\src\Volo.Abp.EntityFrameworkCore.MySQL\Volo.Abp.EntityFrameworkCore.MySQL.csproj", "{48BEAA5C-E2D9-4C07-AED0-F59574D68E9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.EventBus", "framework\src\Volo.Abp.EventBus\Volo.Abp.EventBus.csproj", "{6FDD4F25-232A-440D-BA49-BF934174392C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -245,6 +255,26 @@ Global
 		{180AC8B7-58A4-4956-B848-940A8B0D8ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{180AC8B7-58A4-4956-B848-940A8B0D8ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{180AC8B7-58A4-4956-B848-940A8B0D8ED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{410FC520-1058-44A5-BCC7-0E77B0B7FC07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{410FC520-1058-44A5-BCC7-0E77B0B7FC07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{410FC520-1058-44A5-BCC7-0E77B0B7FC07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{410FC520-1058-44A5-BCC7-0E77B0B7FC07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE74DE5A-42C7-4477-B516-8BB113D1C91C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE74DE5A-42C7-4477-B516-8BB113D1C91C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE74DE5A-42C7-4477-B516-8BB113D1C91C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE74DE5A-42C7-4477-B516-8BB113D1C91C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C3110BF-E93A-4470-B360-9993A4F0C27C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C3110BF-E93A-4470-B360-9993A4F0C27C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C3110BF-E93A-4470-B360-9993A4F0C27C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C3110BF-E93A-4470-B360-9993A4F0C27C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48BEAA5C-E2D9-4C07-AED0-F59574D68E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48BEAA5C-E2D9-4C07-AED0-F59574D68E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48BEAA5C-E2D9-4C07-AED0-F59574D68E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48BEAA5C-E2D9-4C07-AED0-F59574D68E9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FDD4F25-232A-440D-BA49-BF934174392C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FDD4F25-232A-440D-BA49-BF934174392C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FDD4F25-232A-440D-BA49-BF934174392C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FDD4F25-232A-440D-BA49-BF934174392C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -289,6 +319,11 @@ Global
 		{FDF150AE-4FD5-492B-82E5-5E0AB29FF363} = {E3B07A09-1576-41B2-8193-A38622201D46}
 		{12613FA7-888E-4ABE-BC64-E717D5F56BDB} = {E3B07A09-1576-41B2-8193-A38622201D46}
 		{7F5823A2-6E70-488C-A691-2C33C051918D} = {E3B07A09-1576-41B2-8193-A38622201D46}
+		{410FC520-1058-44A5-BCC7-0E77B0B7FC07} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
+		{AE74DE5A-42C7-4477-B516-8BB113D1C91C} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
+		{2C3110BF-E93A-4470-B360-9993A4F0C27C} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
+		{48BEAA5C-E2D9-4C07-AED0-F59574D68E9D} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
+		{6FDD4F25-232A-440D-BA49-BF934174392C} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F2BAE819-78D4-407A-9201-22473B2850B0}
