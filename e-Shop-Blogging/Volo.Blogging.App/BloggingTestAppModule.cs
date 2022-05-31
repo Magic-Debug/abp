@@ -62,8 +62,7 @@ public class BloggingTestAppModule : AbpModule
 
         Configure<AbpDbConnectionOptions>(options =>
         {
-            const string connStringName = "SqlServer";
-            options.ConnectionStrings.Default = configuration.GetConnectionString(connStringName);
+            options.ConnectionStrings.Default = configuration.GetConnectionString("MySql");
         });
 
         Configure<AbpDbContextOptions>(options =>
