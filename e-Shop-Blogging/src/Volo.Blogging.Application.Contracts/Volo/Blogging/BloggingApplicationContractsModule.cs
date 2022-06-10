@@ -1,7 +1,4 @@
-﻿using Volo.Abp.Localization;
-using Volo.Abp.Modularity;
-using Volo.Abp.VirtualFileSystem;
-using Volo.Blogging.Localization;
+﻿using Volo.Abp.Modularity;
 
 namespace Volo.Blogging
 {

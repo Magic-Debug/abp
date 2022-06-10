@@ -24,11 +24,10 @@ namespace Volo.Blogging.Admin.Pages.Blogging.Admin.Blogs
 
         public virtual async Task<ActionResult> OnGetAsync()
         {
-            if (!await _authorization.IsGrantedAsync(BloggingPermissions.Blogs.Create))
-            {
-                return Redirect("/");
-            }
-
+            //if (!await _authorization.IsGrantedAsync(BloggingPermissions.Blogs.Create))
+            //{
+            //    return Redirect("/");
+            //}
             return Page();
         }
 

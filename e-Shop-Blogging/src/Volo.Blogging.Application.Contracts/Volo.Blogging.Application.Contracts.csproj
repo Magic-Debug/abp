@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 
 
@@ -10,7 +10,12 @@
     <RootNamespace />
   </PropertyGroup>
 
+
+
   <ItemGroup>
+    <ProjectReference Include="..\..\..\framework\src\Volo.Abp.Ddd.Application.Contracts\Volo.Abp.Ddd.Application.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\framework\src\Volo.Abp.Ddd.Application\Volo.Abp.Ddd.Application.csproj" />
+    <ProjectReference Include="..\..\..\framework\src\Volo.Abp\Volo.Abp.csproj" />
     <ProjectReference Include="..\Volo.Blogging.Application.Contracts.Shared\Volo.Blogging.Application.Contracts.Shared.csproj" />
   </ItemGroup>
 

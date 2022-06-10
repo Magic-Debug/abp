@@ -38,7 +38,7 @@ namespace Volo.Blogging.Admin.Blogs
             return ObjectMapper.Map<Blog, BlogDto>(blog);
         }
 
-        [Authorize(BloggingPermissions.Blogs.Create)]
+       // [Authorize(BloggingPermissions.Blogs.Create)]
         public async Task<BlogDto> CreateAsync(CreateBlogDto input)
         {
             var newBlog = new Blog(GuidGenerator.Create(), input.Name, input.ShortName)
@@ -51,7 +51,7 @@ namespace Volo.Blogging.Admin.Blogs
             return ObjectMapper.Map<Blog, BlogDto>(newBlog);
         }
 
-        [Authorize(BloggingPermissions.Blogs.Update)]
+       // [Authorize(BloggingPermissions.Blogs.Update)]
         public async Task<BlogDto> UpdateAsync(Guid id, UpdateBlogDto input)
         {
             var blog = await _blogRepository.GetAsync(id);
