@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -11,7 +13,7 @@ public class Program
     public static int Main(string[] args)
     {
         Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug() 
+            .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.FromLogContext()
             .WriteTo.File("Logs/logs.txt")
@@ -40,6 +42,20 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+                webBuilder
+                .UseKestrel()
+                .ConfigureKestrel((context, options) =>
+                {
+                    options.Listen(IPAddress.Any, 666, (listenOptions) =>
+                    {
+                        listenOptions.UseConnectionLogging("Socket Connection Log");
+                        listenOptions.Use(connection =>
+                        {
+                            return connection;
+                        });
+                        listenOptions.UseConnectionHandler<LogConnectionHandler>();
+                    });
+                });
             })
             .UseAutofac()
             .UseSerilog();
