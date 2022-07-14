@@ -328,3 +328,4 @@ deploy/_run_all_log.txt
 /modules/docs/src/Volo.Docs.Admin.Web/Properties/launchSettings.json
 /modules/docs/src/Volo.Docs.Web/Properties/launchSettings.json
 /modules/account/src/Volo.Abp.Account.Web/Logs/logs.txt
+*.txt

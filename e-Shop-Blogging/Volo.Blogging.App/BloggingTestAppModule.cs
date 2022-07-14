@@ -5,9 +5,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Volo.Abp;
@@ -17,6 +19,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.SignalR;
+using Volo.Abp.AspNetCore.WebClientInfo;
 using Volo.Abp.Autofac;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.BlobStoring.Database;
@@ -52,6 +55,8 @@ public class BloggingTestAppModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
+        context.Services.Replace(ServiceDescriptor.Transient<IWebClientInfoProvider, NginxWebClientInfoProvider>());
+
         IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
         IConfiguration configuration = context.Services.GetConfiguration();
         ConfigureCache();
@@ -59,7 +64,10 @@ public class BloggingTestAppModule : AbpModule
         {
             options.RoutePrefix = "/x-blog/";
         });
-
+        context.Services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        });
         Configure<AbpDbConnectionOptions>(options =>
         {
             options.ConnectionStrings.Default = configuration.GetConnectionString("MySql");
@@ -96,7 +104,10 @@ public class BloggingTestAppModule : AbpModule
             options.SupportedCultures = cultures;
             options.SupportedUICultures = cultures;
         });
-
+        context.Services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        });
         Configure<AbpThemingOptions>(options =>
         {
             options.DefaultThemeName = BasicTheme.Name;
@@ -188,9 +199,9 @@ public class BloggingTestAppModule : AbpModule
         }
 
         app.UseStaticFiles();
-
+        app.UseForwardedHeaders();
         app.UseRouting();
-
+        app.UseForwardedHeaders();
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
