@@ -41,19 +41,19 @@ public class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>();
-                webBuilder
+                webBuilder.UseStartup<Startup>()
                 .UseKestrel()
                 .ConfigureKestrel((context, options) =>
                 {
+                    options.ListenAnyIP(5424);
                     options.Listen(IPAddress.Any, 666, (listenOptions) =>
                     {
-                        listenOptions.UseConnectionLogging("Socket Connection Log");
-                        listenOptions.Use(connection =>
+                        listenOptions.UseConnectionLogging("Socket Connection Log")
+                        .Use(connection =>
                         {
                             return connection;
-                        });
-                        listenOptions.UseConnectionHandler<LogConnectionHandler>();
+                        })
+                        .UseConnectionHandler<LogConnectionHandler>();
                     });
                 });
             })

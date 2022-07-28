@@ -27,9 +27,7 @@ $(function () {
                         items: [
                             {
                                 text: l('Edit'),
-                                visible: abp.auth.isGranted(
-                                    'Blogging.Blog.Update'
-                                ),
+                                visible: true,
                                 action: function (data) {
                                     _editModal.open({
                                         blogId: data.record.id,
@@ -38,9 +36,7 @@ $(function () {
                             },
                             {
                                 text: l('Delete'),
-                                visible: abp.auth.isGranted(
-                                    'Blogging.Blog.Delete'
-                                ),
+                                visible: true, //abp.auth.isGranted('Blogging.Blog.Delete'),
                                 confirmMessage: function (data) {
                                     return l('BlogDeletionWarningMessage');
                                 },
