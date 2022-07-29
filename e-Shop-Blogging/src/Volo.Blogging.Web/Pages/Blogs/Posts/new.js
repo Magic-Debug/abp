@@ -7,58 +7,8 @@ $(function () {
     var maxTitleLength = parseInt($titleLengthWarning.data('max-length'));
     var $title = $('#Post_Title');
     var $url = $('#Post_Url');
-    var $coverImage = $('#CoverImage');
-    var $postCoverImage = $('#Post_CoverImage');
-    var $coverImageFile = $('#CoverImageFile');
     var $postFormSubmitButton = $('#PostFormSubmitButton');
 
-    var setCoverImage = function (file) {
-        $postCoverImage.val(file.webUrl);
-        $coverImage.attr('src', file.webUrl);
-        $coverImage.show();
-        $postFormSubmitButton.removeAttr('disabled');
-    };
-
-    var uploadCoverImage = function (file) {
-        var formData = new FormData();
-        formData.append('file', file);
-        formData.append('name', file.name);
-        $.ajax({
-            type: 'POST',
-            url: '/api/blogging/files/images/upload',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                setCoverImage(response);
-            },
-        });
-    };
-
-    $coverImageFile.change(function () {
-        if (!$coverImageFile.prop('files').length) {
-            return;
-        }
-        $postFormSubmitButton.attr('disabled', true);
-        var file = $coverImageFile.prop('files')[0];
-        uploadCoverImage(file);
-    });
-
-    var uploadImage = function (file, callbackFn) {
-        var formData = new FormData();
-        formData.append('file', file);
-        formData.append('name', file.name);
-        $.ajax({
-            type: 'POST',
-            url: '/api/blogging/files/images/upload',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                callbackFn(response.webUrl);
-            },
-        });
-    };
 
     var newPostEditor = new toastui.Editor({
         el: $editorContainer[0],
@@ -71,9 +21,9 @@ $(function () {
             addImageBlobHook: function (blob, callback, source) {
                 var imageAltText = blob.name;
 
-                uploadImage(blob, function (webUrl) {
-                    callback(webUrl, imageAltText);
-                });
+                //uploadImage(blob, function (webUrl) {
+                //    callback(webUrl, imageAltText);
+                //});
             },
         },
         events: {
@@ -91,14 +41,6 @@ $(function () {
 
         var postText = newPostEditor.getMarkdown();
         $postTextInput.val(postText);
-
-        if (!$form.valid()) {
-            var validationResult = $form.validate();
-            abp.message.warn(validationResult.errorList[0].message); //TODO: errors can be merged into lines. make sweetalert accept HTML.
-            e.preventDefault();
-            return false; //for old browsers
-        }
-
         $submitButton.buttonBusy();
         $(this).off('submit').submit();
         return true;

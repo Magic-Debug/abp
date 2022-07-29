@@ -40,18 +40,13 @@
                             </abp-alert>
 
                             <abp-input asp-for="Post.Url" />
-                            <abp-input asp-for="Post.CoverImage" />
-
                             <abp-row>
                                 <abp-column size-sm="_9">
                                     <div class="mb-3">
-                                        <label class="form-label" for="CoverImageFile">@L["CoverImage"]</label>
                                         <span> * </span>
-                                        <input class="form-control" type="file" id="CoverImageFile" />
                                     </div>
                                 </abp-column>
                                 <abp-column size-sm="_3">
-                                    <img id="CoverImage" src="@Model.Post.CoverImage" height="80" width="160" style="display:none" />
                                 </abp-column>
                             </abp-row>
 

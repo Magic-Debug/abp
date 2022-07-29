@@ -189,7 +189,7 @@ namespace Volo.Blogging.Posts
             return ObjectMapper.Map<Post, PostWithDetailsDto>(post);
         }
 
-        [Authorize(BloggingPermissions.Posts.Create)]
+        //[Authorize(BloggingPermissions.Posts.Create)]
         public async Task<PostWithDetailsDto> CreateAsync(CreatePostDto input)
         {
             input.Url = await RenameUrlIfItAlreadyExistAsync(input.BlogId, input.Url);

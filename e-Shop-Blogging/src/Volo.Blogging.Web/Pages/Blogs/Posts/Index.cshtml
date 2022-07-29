@@ -89,7 +89,7 @@
                 <div class="col-md-4">
 
 
-                    @if (await Authorization.IsGrantedAsync(BloggingPermissions.Posts.Create))
+                    @if (1>0)//await Authorization.IsGrantedAsync(BloggingPermissions.Posts.Create))
                     {
                         <a class="btn btn-primary btn-rounded mb-3 active " asp-page="./New" asp-route-blogShortName="@Model.BlogShortName">@L["CreateANewPost"]</a>
                     }

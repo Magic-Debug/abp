@@ -39,10 +39,10 @@ namespace Volo.Blogging.Pages.Blog.Posts
 
         public virtual async Task<ActionResult> OnGetAsync()
         {
-            if (!await _authorization.IsGrantedAsync(BloggingPermissions.Posts.Create))
-            {
-                return Redirect("/");
-            }
+            //if (!await _authorization.IsGrantedAsync(BloggingPermissions.Posts.Create))
+            //{
+            //    return Redirect("/");
+            //}
             if (BlogNameControlHelper.IsProhibitedFileFormatName(BlogShortName))
             {
                 return NotFound();
@@ -65,8 +65,11 @@ namespace Volo.Blogging.Pages.Blog.Posts
             {
                 Post.Description = Post.Content.Truncate(PostConsts.MaxSeoFriendlyDescriptionLength);
             }
+            Post.Url = "abc/123";
+            Post.CoverImage = "http://117.50.40.186:9080/xiuren/123.jpg";
+            var item= ObjectMapper.Map<CreatePostViewModel, CreatePostDto>(Post);
 
-            var postWithDetailsDto = await _postAppService.CreateAsync(ObjectMapper.Map<CreatePostViewModel, CreatePostDto>(Post));
+            var postWithDetailsDto = await _postAppService.CreateAsync(item);
 
             //TODO: Try Url.Page(...)
             var urlPrefix = _blogOptions.RoutePrefix;

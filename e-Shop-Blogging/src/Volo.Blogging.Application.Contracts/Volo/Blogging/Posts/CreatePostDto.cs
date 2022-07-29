@@ -8,18 +8,14 @@ namespace Volo.Blogging.Posts
     {
         public Guid BlogId { get; set; }
 
-        [Required]
         [DynamicStringLength(typeof(PostConsts), nameof(PostConsts.MaxTitleLength))]
         public string Title { get; set; }
 
-        [Required]
         public string CoverImage { get; set; }
 
-        [Required]
         [DynamicStringLength(typeof(PostConsts), nameof(PostConsts.MaxUrlLength))]
         public string Url { get; set; }
 
-        [Required]
         [DynamicStringLength(typeof(PostConsts), nameof(PostConsts.MaxContentLength))]
         public string Content { get; set; }
 
