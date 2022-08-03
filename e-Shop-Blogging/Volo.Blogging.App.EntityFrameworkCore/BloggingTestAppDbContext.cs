@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Blogging.EntityFrameworkCore;
 
@@ -18,6 +17,5 @@ public class BloggingTestAppDbContext : AbpDbContext<BloggingTestAppDbContext>
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ConfigureBlogging();
-        modelBuilder.ConfigureBlobStoring();
     }
 }

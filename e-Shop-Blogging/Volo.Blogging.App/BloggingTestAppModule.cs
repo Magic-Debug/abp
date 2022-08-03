@@ -22,7 +22,7 @@ using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.AspNetCore.WebClientInfo;
 using Volo.Abp.Autofac;
 using Volo.Abp.BlobStoring;
-using Volo.Abp.BlobStoring.Database;
+using Volo.Abp.BlobStoring.Minio;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
@@ -46,7 +46,7 @@ namespace Volo.Blogging.App;
     typeof(AbpAspNetCoreSignalRModule),
 
     typeof(BloggingTestAppEntityFrameworkCoreModule),
-    typeof(BlobStoringDatabaseDomainModule),
+    typeof(AbpBlobStoringMinioModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpAspNetCoreMvcUiBasicThemeModule)
@@ -117,7 +117,14 @@ public class BloggingTestAppModule : AbpModule
         {
             options.Containers.ConfigureDefault(container =>
             {
-                container.UseDatabase();
+                container.UseMinio((MinioBlobProviderConfiguration config) =>
+                {
+                    config.EndPoint = "159.75.111.137:32748";
+                    config.BucketName = "hello";
+                    config.AccessKey = "admin";
+                    config.CreateBucketIfNotExists = true;
+                    config.SecretKey = "ENJAHP6x7C";
+                });
             });
         });
         AddCustomAuthentication(context.Services, configuration);
