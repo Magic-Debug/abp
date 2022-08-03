@@ -62,7 +62,7 @@ public class BloggingTestAppModule : AbpModule
         ConfigureCache();
         Configure<BloggingUrlOptions>(options =>
         {
-            options.RoutePrefix = "/x-blog/";
+            options.RoutePrefix = "/blog/";
         });
         context.Services.Configure<ForwardedHeadersOptions>(options =>
         {
