@@ -161,7 +161,8 @@ public class BloggingTestAppModule : AbpModule
     {
         builder.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Blogging API", Version = "v1" });
+            options.SwaggerDoc("blog-api-v1.5", new OpenApiInfo { Title = "blog-api", Version = "v1.5" });
+
             options.DocInclusionPredicate((docName, description) => true);
             options.CustomSchemaIds(type => type.FullName);
             string identityUrlExternal = configuration.GetValue<string>("AuthorityUrl");
@@ -209,10 +210,10 @@ public class BloggingTestAppModule : AbpModule
         app.UseForwardedHeaders();
         app.UseRouting();
         app.UseForwardedHeaders();
-        app.UseSwagger();
+        app.UseSwagger(c => { c.RouteTemplate = "{documentName}/swagger.json"; });
         app.UseSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Blogging API");
+            options.SwaggerEndpoint("/blog-api-v1.5/swagger.json", "Blogging API");
             options.OAuthClientId("Blogging");
             options.OAuthAppName("Blogging Swagger UI");
         });
