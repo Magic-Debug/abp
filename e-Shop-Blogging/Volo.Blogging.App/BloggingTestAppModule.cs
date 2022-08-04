@@ -119,11 +119,11 @@ public class BloggingTestAppModule : AbpModule
             {
                 container.UseMinio((MinioBlobProviderConfiguration config) =>
                 {
-                    config.EndPoint = "159.75.111.137:32748";
+                    config.EndPoint = "159.75.111.137:32022";
                     config.BucketName = "hello";
-                    config.AccessKey = "admin";
+                    config.AccessKey = "Awesome123";
                     config.CreateBucketIfNotExists = true;
-                    config.SecretKey = "ENJAHP6x7C";
+                    config.SecretKey = "Awesome123";
                 });
             });
         });
