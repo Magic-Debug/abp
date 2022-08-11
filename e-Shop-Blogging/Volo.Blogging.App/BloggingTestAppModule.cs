@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
@@ -112,7 +114,24 @@ public class BloggingTestAppModule : AbpModule
         {
             options.DefaultThemeName = BasicTheme.Name;
         });
-
+        context.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder
+                    .WithOrigins(
+                        configuration["App:CorsOrigins"]
+                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                            .Select(o => o.RemovePostFix("/"))
+                            .ToArray()
+                    )
+                    .WithAbpExposedHeaders()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
         Configure<AbpBlobStoringOptions>(options =>
         {
             options.Containers.ConfigureDefault(container =>
@@ -209,6 +228,7 @@ public class BloggingTestAppModule : AbpModule
         app.UseStaticFiles();
         app.UseForwardedHeaders();
         app.UseRouting();
+        app.UseCors();
         app.UseForwardedHeaders();
         app.UseSwagger(c => { c.RouteTemplate = "{documentName}/swagger.json"; });
         app.UseSwaggerUI(options =>
