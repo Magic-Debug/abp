@@ -48,10 +48,20 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Identity.Web;
+using Volo.Abp.SettingManagement.Web;
+using Volo.Abp.TenantManagement.Web;
+using Volo.Abp.PermissionManagement.Web;
 
 namespace Hello.IdentityServer;
 
 [DependsOn(
+    typeof(AbpPermissionManagementWebModule),
+    typeof(AbpSettingManagementWebModule),
+    typeof(AbpFeatureManagementWebModule),
+    typeof(AbpTenantManagementWebModule),
+    typeof(AbpSettingManagementWebModule),
+    typeof(AbpIdentityWebModule),
     typeof(AbpAccountWebIdentityServerModule),
     typeof(AbpAccountApplicationModule),
     typeof(AbpAccountHttpApiModule),
@@ -92,8 +102,9 @@ public class HelloIdentityServerModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseMySQL(x => { 
-            
+            options.UseMySQL(x =>
+            {
+
             });
         });
         Configure<AbpDbConnectionOptions>(options =>
@@ -120,8 +131,8 @@ public class HelloIdentityServerModule : AbpModule
 
         Configure<AbpAuditingOptions>(options =>
         {
-                //options.IsEnabledForGetRequests = true;
-                options.ApplicationName = "AuthServer";
+            //options.IsEnabledForGetRequests = true;
+            options.ApplicationName = "AuthServer";
         });
 
         Configure<AppUrlOptions>(options =>
