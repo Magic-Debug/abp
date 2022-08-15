@@ -54,6 +54,9 @@ using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.PermissionManagement.Web;
 using Volo.Abp.BackgroundJobs;
 using IdentityServer4.Configuration;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 namespace Hello.IdentityServer;
 
@@ -101,7 +104,9 @@ public class HelloIdentityServerModule : AbpModule
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
+        context.Services.AddHealthChecks().AddCheck("self", () => HealthCheckResult.Healthy());
         ConfigureIdentityServerOptions(configuration);
+
         Configure<AbpDbContextOptions>(options =>
         {
             options.UseMySQL(x =>
@@ -246,6 +251,21 @@ public class HelloIdentityServerModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapDefaultControllerRoute();
+            endpoints.MapControllers();
+            IEndpointConventionBuilder endpointConventionBuilder = endpoints.MapHealthChecks($"api/hc", options: new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            endpoints.MapHealthChecks($"api/liveness", new HealthCheckOptions
+            {
+                Predicate = r => r.Name.Contains("self"),
+                AllowCachingResponses = true
+            });
+        });
 
         await SeedData(context);
     }
