@@ -52,6 +52,8 @@ using Volo.Abp.Identity.Web;
 using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.PermissionManagement.Web;
+using Volo.Abp.BackgroundJobs;
+using IdentityServer4.Configuration;
 
 namespace Hello.IdentityServer;
 
@@ -99,7 +101,7 @@ public class HelloIdentityServerModule : AbpModule
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
-
+        ConfigureIdentityServerOptions(configuration);
         Configure<AbpDbContextOptions>(options =>
         {
             options.UseMySQL(x =>
@@ -118,7 +120,19 @@ public class HelloIdentityServerModule : AbpModule
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
             });
-
+        Configure<AbpAuditingOptions>(options =>
+        {
+            //options.IsEnabledForGetRequests = true;
+            options.ApplicationName = "ABP Hello.IdentityServer";
+        });
+        Configure<AbpBackgroundJobOptions>(options =>
+        {
+            options.IsJobExecutionEnabled = true;
+        });
+        Configure<AbpDistributedCacheOptions>(options =>
+        {
+            options.KeyPrefix = "ids4:";
+        });
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Languages.Add(new LanguageInfo("ar", "ar", "العربية"));
@@ -127,12 +141,6 @@ public class HelloIdentityServerModule : AbpModule
 
             options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
 
-        });
-
-        Configure<AbpAuditingOptions>(options =>
-        {
-            //options.IsEnabledForGetRequests = true;
-            options.ApplicationName = "AuthServer";
         });
 
         Configure<AppUrlOptions>(options =>
@@ -149,11 +157,6 @@ public class HelloIdentityServerModule : AbpModule
             });
 
         //context.Services.ForwardIdentityAuthenticationForBearer();
-
-        Configure<AbpDistributedCacheOptions>(options =>
-        {
-            options.KeyPrefix = "OfficialWebsite:";
-        });
 
         Configure<AbpMultiTenancyOptions>(options =>
         {
@@ -190,7 +193,23 @@ public class HelloIdentityServerModule : AbpModule
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
 #endif
     }
+    private void ConfigureIdentityServerOptions(IConfiguration configuration)
+    {
+        Configure<IdentityServerOptions>(options =>
+        {
+            options.Events.RaiseSuccessEvents = true;
+            options.Events.RaiseFailureEvents = true;
+            options.Events.RaiseErrorEvents = true;
+            options.Events.RaiseInformationEvents = true;
+            options.IssuerUri = configuration["App:IssuerUri"];
+            // options.PublicOrigin = configuration["App:PublicOrigin"];
+            options.LowerCaseIssuerUri = true;
+            options.MutualTls.Enabled = true;
+            options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
 
+            System.Diagnostics.Debug.WriteLine(options);
+        });
+    }
     public async override Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
     {
         var app = context.GetApplicationBuilder();

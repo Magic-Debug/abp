@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
 using Serilog.Events;
 
@@ -12,6 +13,7 @@ public class Program
 {
     public async static Task<int> Main(string[] args)
     {
+        IdentityModelEventSource.ShowPII = true;
         Log.Logger = new LoggerConfiguration()
 #if DEBUG
             .MinimumLevel.Debug()
