@@ -57,6 +57,8 @@ using IdentityServer4.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
+using Volo.Abp.BackgroundJobs.RabbitMQ;
 
 namespace Hello.IdentityServer;
 
@@ -80,6 +82,8 @@ namespace Hello.IdentityServer;
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),
+    typeof(AbpBackgroundJobsRabbitMqModule),
+    typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
     typeof(AbpIdentityServerEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementDomainIdentityModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
@@ -134,6 +138,14 @@ public class HelloIdentityServerModule : AbpModule
         {
             options.IsJobExecutionEnabled = true;
         });
+
+        Configure<AbpBackgroundJobWorkerOptions>(options =>
+        {
+            options.JobPollPeriod = 1000 * 10;
+            options.DefaultFirstWaitDuration = 1;
+            options.DefaultWaitFactor = 1;
+        });
+
         Configure<AbpDistributedCacheOptions>(options =>
         {
             options.KeyPrefix = "ids4:";

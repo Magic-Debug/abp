@@ -7,6 +7,8 @@
     <RootNamespace>Hello.IdentityServer</RootNamespace>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
     <UserSecretsId>LintSense.OfficialWebsite-c2d31439-b723-48e2-b061-5ebd7aeb6010</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +38,7 @@
     <ProjectReference Include="..\framework\src\Volo.Abp.AspNetCore.Mvc\Volo.Abp.AspNetCore.Mvc.csproj" />
     <ProjectReference Include="..\framework\src\Volo.Abp.AspNetCore.Serilog\Volo.Abp.AspNetCore.Serilog.csproj" />
     <ProjectReference Include="..\framework\src\Volo.Abp.Autofac\Volo.Abp.Autofac.csproj" />
+    <ProjectReference Include="..\framework\src\Volo.Abp.BackgroundJobs.RabbitMQ\Volo.Abp.BackgroundJobs.RabbitMQ.csproj" />
     <ProjectReference Include="..\framework\src\Volo.Abp.Caching.StackExchangeRedis\Volo.Abp.Caching.StackExchangeRedis.csproj" />
     <ProjectReference Include="..\framework\src\Volo.Abp.EntityFrameworkCore.MySQL\Volo.Abp.EntityFrameworkCore.MySQL.csproj" />
     <ProjectReference Include="..\framework\src\Volo.Abp.EntityFrameworkCore\Volo.Abp.EntityFrameworkCore.csproj" />
@@ -49,6 +52,7 @@
     <ProjectReference Include="..\modules\audit-logging\src\Volo.Abp.AuditLogging.Domain.Shared\Volo.Abp.AuditLogging.Domain.Shared.csproj" />
     <ProjectReference Include="..\modules\audit-logging\src\Volo.Abp.AuditLogging.Domain\Volo.Abp.AuditLogging.Domain.csproj" />
     <ProjectReference Include="..\modules\audit-logging\src\Volo.Abp.AuditLogging.EntityFrameworkCore\Volo.Abp.AuditLogging.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\modules\background-jobs\src\Volo.Abp.BackgroundJobs.EntityFrameworkCore\Volo.Abp.BackgroundJobs.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\modules\basic-theme\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj" />
     <ProjectReference Include="..\modules\feature-management\src\Volo.Abp.FeatureManagement.Application.Contracts\Volo.Abp.FeatureManagement.Application.Contracts.csproj" />
     <ProjectReference Include="..\modules\feature-management\src\Volo.Abp.FeatureManagement.Application\Volo.Abp.FeatureManagement.Application.csproj" />
@@ -92,6 +96,18 @@
     </None>
     <None Update="Pages\**\*.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\libs\abp\core\abp.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
