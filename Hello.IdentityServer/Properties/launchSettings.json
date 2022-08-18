@@ -16,12 +16,12 @@
       }
     },
     "IdentityServerHost": {
-      "commandName": "Project",
-      "launchBrowser": true,
       "applicationUrl": "https://localhost:44371",
+      "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "launchBrowser": true
     }
   }
 }

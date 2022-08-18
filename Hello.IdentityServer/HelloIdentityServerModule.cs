@@ -120,7 +120,6 @@ public class HelloIdentityServerModule : AbpModule
         });
         Configure<AbpDbConnectionOptions>(options =>
         {
-            options.ConnectionStrings.Default = configuration.GetConnectionString("MySql");
         });
         context.Services.AddAbpSwaggerGen(
             options =>
