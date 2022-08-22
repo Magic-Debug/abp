@@ -124,7 +124,7 @@ public class HelloIdentityServerModule : AbpModule
         context.Services.AddAbpSwaggerGen(
             options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "OfficialWebsite API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Hello.IdentityServer API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
             });
@@ -151,10 +151,7 @@ public class HelloIdentityServerModule : AbpModule
         });
         Configure<AbpLocalizationOptions>(options =>
         {
-            options.Languages.Add(new LanguageInfo("ar", "ar", "العربية"));
-            options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
             options.Languages.Add(new LanguageInfo("en", "en", "English"));
-
             options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
 
         });
@@ -179,11 +176,11 @@ public class HelloIdentityServerModule : AbpModule
             options.IsEnabled = true;
         });
 
-        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("OfficialWebsite");
+        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Hello.IdentityServer");
         if (!hostingEnvironment.IsDevelopment())
         {
             var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
-            dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "OfficialWebsite-Protection-Keys");
+            dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Hello.IdentityServer-Protection-Keys");
         }
 
         context.Services.AddCors(options =>
@@ -241,7 +238,7 @@ public class HelloIdentityServerModule : AbpModule
             app.UseHsts();
         }
 
-        app.UseHttpsRedirection();
+        // app.UseHttpsRedirection();
         app.UseCorrelationId();
         app.UseStaticFiles();
         app.UseRouting();
