@@ -59,6 +59,11 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.RabbitMQ;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
+using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace Hello.IdentityServer;
 
@@ -82,7 +87,7 @@ namespace Hello.IdentityServer;
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),
-   // typeof(AbpBackgroundJobsRabbitMqModule),
+    // typeof(AbpBackgroundJobsRabbitMqModule),
     typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
     typeof(AbpIdentityServerEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementDomainIdentityModule),
@@ -164,11 +169,28 @@ public class HelloIdentityServerModule : AbpModule
         context.Services.AddAuthentication()
             .AddJwtBearer(options =>
             {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false
+                };
+                options.Events = new JwtBearerEvents();
+                options.Events.OnAuthenticationFailed = (AuthenticationFailedContext authFailedCtx) =>
+                {
+                    authFailedCtx.Response.OnStarting(async () =>
+                    {
+                        var result = new { Message = "Token验证失败", Code = 401 };
+                        authFailedCtx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        authFailedCtx.Response.ContentType = "application/json";
+                        string json = JsonConvert.SerializeObject(result);
+                        await authFailedCtx.Response.WriteAsync(json);
+                    });
+                    return Task.CompletedTask;
+                };
                 options.Authority = configuration["AuthServer:Authority"];
                 options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                options.Audience = configuration["AuthServer:ApiName"];
+                //options.Audience = configuration["AuthServer:ApiName"];
             });
-
         //context.Services.ForwardIdentityAuthenticationForBearer();
 
         Configure<AbpMultiTenancyOptions>(options =>
