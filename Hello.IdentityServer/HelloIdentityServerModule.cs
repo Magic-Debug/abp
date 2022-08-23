@@ -82,7 +82,7 @@ namespace Hello.IdentityServer;
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),
-    typeof(AbpBackgroundJobsRabbitMqModule),
+   // typeof(AbpBackgroundJobsRabbitMqModule),
     typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
     typeof(AbpIdentityServerEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementDomainIdentityModule),
