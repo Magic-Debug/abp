@@ -64,6 +64,7 @@ using Newtonsoft.Json;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using IdentityServer4.Extensions;
 
 namespace Hello.IdentityServer;
 
@@ -237,7 +238,7 @@ public class HelloIdentityServerModule : AbpModule
             options.Events.RaiseErrorEvents = true;
             options.Events.RaiseInformationEvents = true;
             options.IssuerUri = configuration["App:IssuerUri"];
-            // options.PublicOrigin = configuration["App:PublicOrigin"];
+            //options.PublicOrigin = configuration["App:PublicOrigin"];
             options.LowerCaseIssuerUri = true;
             options.MutualTls.Enabled = true;
             options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
@@ -249,6 +250,11 @@ public class HelloIdentityServerModule : AbpModule
     {
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
+        app.Use(async (ctx, next) =>
+        {
+            ctx.SetIdentityServerOrigin("http://82.157.167.144:30571/");
+            await next();
+        });
 
         if (env.IsDevelopment())
         {
