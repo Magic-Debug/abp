@@ -1,0 +1,1 @@
+docker build -t  wjkhappy14/hello.ids4 .

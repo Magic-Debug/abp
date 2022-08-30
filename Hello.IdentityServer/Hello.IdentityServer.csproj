@@ -106,6 +106,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="docker-build.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
