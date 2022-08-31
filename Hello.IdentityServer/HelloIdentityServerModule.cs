@@ -65,6 +65,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Extensions;
+using Volo.Abp.AspNetCore.WebClientInfo;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Hello.IdentityServer;
 
@@ -116,7 +118,7 @@ public class HelloIdentityServerModule : AbpModule
         var configuration = context.Services.GetConfiguration();
         context.Services.AddHealthChecks().AddCheck("self", () => HealthCheckResult.Healthy());
         ConfigureIdentityServerOptions(configuration);
-
+        context.Services.Replace(ServiceDescriptor.Transient<IWebClientInfoProvider, NginxWebClientInfoProvider>());
         Configure<AbpDbContextOptions>(options =>
         {
             options.UseMySQL(x =>
@@ -143,7 +145,10 @@ public class HelloIdentityServerModule : AbpModule
         {
             options.IsJobExecutionEnabled = true;
         });
-
+        context.Services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        });
         Configure<AbpBackgroundJobWorkerOptions>(options =>
         {
             options.JobPollPeriod = 1000 * 10;
