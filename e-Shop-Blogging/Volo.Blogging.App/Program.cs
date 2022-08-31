@@ -46,7 +46,7 @@ public class Program
                 .ConfigureKestrel((context, options) =>
                 {
                     options.ListenAnyIP(5424);
-                    options.Listen(IPAddress.Any, 666, (listenOptions) =>
+                    options.Listen(IPAddress.Any, 5426, (listenOptions) =>
                     {
                         listenOptions.UseConnectionLogging("Socket Connection Log")
                         .Use(connection =>
