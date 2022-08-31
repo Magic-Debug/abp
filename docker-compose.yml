@@ -58,4 +58,4 @@ services:
   hello-ids4:
     image: ${DOCKER_REGISTRY:-wjkhappy14}/hello.ids4:latest
     ports:
-    - "4371:80"
+    - "4371:4371"
