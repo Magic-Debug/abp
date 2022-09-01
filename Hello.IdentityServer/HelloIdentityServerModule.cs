@@ -67,6 +67,7 @@ using Microsoft.AspNetCore.Http;
 using IdentityServer4.Extensions;
 using Volo.Abp.AspNetCore.WebClientInfo;
 using Microsoft.AspNetCore.HttpOverrides;
+using Volo.Abp.IdentityServer;
 
 namespace Hello.IdentityServer;
 
@@ -114,6 +115,8 @@ public class HelloIdentityServerModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
+        AbpIdentityServerDbProperties.DbTablePrefix = string.Empty;
+
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
         context.Services.AddHealthChecks().AddCheck("self", () => HealthCheckResult.Healthy());
