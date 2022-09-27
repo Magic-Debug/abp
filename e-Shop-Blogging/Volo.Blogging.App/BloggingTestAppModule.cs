@@ -23,6 +23,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.AspNetCore.WebClientInfo;
+using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.BlobStoring.Minio;
@@ -48,6 +49,7 @@ namespace Volo.Blogging.App;
     typeof(BloggingAdminApplicationModule),
     typeof(AbpAspNetCoreSignalRModule),
     typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(BloggingTestAppEntityFrameworkCoreModule),
     typeof(AbpBlobStoringMinioModule),
     typeof(AbpAutofacModule),

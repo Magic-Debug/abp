@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.AuditLogging;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Caching;
 using Volo.Abp.Domain;
@@ -15,6 +16,7 @@ namespace Volo.Blogging
         typeof(BloggingDomainSharedModule),
         typeof(AbpDddDomainModule),
         typeof(AbpAutoMapperModule),
+        typeof(AbpAuditLoggingDomainModule),
         typeof(AbpCachingModule)
     )]
     public class BloggingDomainModule : AbpModule

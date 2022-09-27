@@ -8,6 +8,7 @@
     <RootNamespace />
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\modules\audit-logging\src\Volo.Abp.AuditLogging.Domain\Volo.Abp.AuditLogging.Domain.csproj" />
     <ProjectReference Include="..\..\..\modules\identity\src\Volo.Abp.Identity.Domain\Volo.Abp.Identity.Domain.csproj" />
     <ProjectReference Include="..\Volo.Blogging.Domain.Shared\Volo.Blogging.Domain.Shared.csproj" />
     <ProjectReference Include="..\..\..\modules\users\src\Volo.Abp.Users.Domain\Volo.Abp.Users.Domain.csproj" />

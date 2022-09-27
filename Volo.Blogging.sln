@@ -145,6 +145,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.EntityFrameworkCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Serilog", "framework\src\Volo.Abp.AspNetCore.Serilog\Volo.Abp.AspNetCore.Serilog.csproj", "{D78D4523-D4DF-4A60-B843-FA42DBC5F663}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{16F698F2-0E88-4DB7-8271-EF2880270705}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "audit-logging", "audit-logging", "{7ABCE91A-FB4D-4415-AB24-C7154327EBC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AuditLogging.Domain", "modules\audit-logging\src\Volo.Abp.AuditLogging.Domain\Volo.Abp.AuditLogging.Domain.csproj", "{117D5628-8187-4DF3-97EF-DB1E931CAB1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AuditLogging.EntityFrameworkCore", "modules\audit-logging\src\Volo.Abp.AuditLogging.EntityFrameworkCore\Volo.Abp.AuditLogging.EntityFrameworkCore.csproj", "{8339B648-9876-4887-BFF0-5113B4FB77AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -359,6 +367,14 @@ Global
 		{D78D4523-D4DF-4A60-B843-FA42DBC5F663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D78D4523-D4DF-4A60-B843-FA42DBC5F663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D78D4523-D4DF-4A60-B843-FA42DBC5F663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117D5628-8187-4DF3-97EF-DB1E931CAB1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117D5628-8187-4DF3-97EF-DB1E931CAB1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117D5628-8187-4DF3-97EF-DB1E931CAB1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117D5628-8187-4DF3-97EF-DB1E931CAB1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8339B648-9876-4887-BFF0-5113B4FB77AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8339B648-9876-4887-BFF0-5113B4FB77AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8339B648-9876-4887-BFF0-5113B4FB77AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8339B648-9876-4887-BFF0-5113B4FB77AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -422,6 +438,9 @@ Global
 		{4D741ECA-2E14-4EF1-A6C3-4E5964DABCC3} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
 		{978C744B-AA57-4385-A700-C529A2B3387E} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
 		{D78D4523-D4DF-4A60-B843-FA42DBC5F663} = {F1D236C8-BF3E-4944-90A5-B62C80E914FC}
+		{7ABCE91A-FB4D-4415-AB24-C7154327EBC5} = {16F698F2-0E88-4DB7-8271-EF2880270705}
+		{117D5628-8187-4DF3-97EF-DB1E931CAB1F} = {7ABCE91A-FB4D-4415-AB24-C7154327EBC5}
+		{8339B648-9876-4887-BFF0-5113B4FB77AB} = {7ABCE91A-FB4D-4415-AB24-C7154327EBC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F2BAE819-78D4-407A-9201-22473B2850B0}
