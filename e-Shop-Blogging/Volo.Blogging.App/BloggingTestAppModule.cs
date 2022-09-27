@@ -79,7 +79,7 @@ public class BloggingTestAppModule : AbpModule
         {
             options.UseMySQL();
         });
-        if (!hostingEnvironment.IsDevelopment())
+        if (1==2)//!hostingEnvironment.IsDevelopment())
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
