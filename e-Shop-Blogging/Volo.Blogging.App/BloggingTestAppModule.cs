@@ -20,6 +20,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Mvc.UI.Theming;
+using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.AspNetCore.WebClientInfo;
 using Volo.Abp.Autofac;
@@ -46,7 +47,7 @@ namespace Volo.Blogging.App;
     typeof(BloggingAdminHttpApiModule),
     typeof(BloggingAdminApplicationModule),
     typeof(AbpAspNetCoreSignalRModule),
-
+    typeof(AbpAspNetCoreSerilogModule),
     typeof(BloggingTestAppEntityFrameworkCoreModule),
     typeof(AbpBlobStoringMinioModule),
     typeof(AbpAutofacModule),
@@ -242,7 +243,8 @@ public class BloggingTestAppModule : AbpModule
         app.UseAuthorization();
 
         app.UseAbpRequestLocalization();
-
+        app.UseAuditing();
+        app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
 
         using IServiceScope scope = context.ServiceProvider.CreateScope();

@@ -5,7 +5,6 @@ using Volo.Blogging.Blogs;
 using Volo.Blogging.Comments;
 using Volo.Blogging.Posts;
 using Volo.Blogging.Tagging;
-using Volo.Blogging.Users;
 
 namespace Volo.Blogging.EntityFrameworkCore
 {
