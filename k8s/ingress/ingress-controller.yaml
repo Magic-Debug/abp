@@ -302,7 +302,7 @@ metadata:
   name: ingress-nginx-controller
   namespace: ingress-nginx
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   externalTrafficPolicy: Local
   ports:
     - name: http
