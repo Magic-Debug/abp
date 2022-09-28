@@ -1,0 +1,75 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blog-ingress
+  namespace: awesome
+  labels:
+    app: blog-app
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-set-header: X-Real-IP $remote_addr
+    nginx.ingress.kubernetes.io/proxy-set-header: X-Forwarded-Proto $scheme
+    nginx.ingress.kubernetes.io/proxy-set-header: X-Forwarded-For $proxy_add_x_forwarded_for
+    metadata.annotations.kubernetes.io/ingress.class: "nginx"
+   
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: my-minio
+            port: 
+             number: 9001
+        path: /minio-ui
+        pathType: Prefix
+      - backend:
+          service:
+            name: hello-blog
+            port: 
+             number: 5424
+        path: /api/blogging
+        pathType: Prefix
+      - backend:
+          service:
+            name: hello-blog
+            port: 
+             number: 5424
+        path: /__bundles
+        pathType: Prefix
+      - backend:
+          service:
+            name: hello-blog
+            port: 
+             number: 5424
+        path: /libs
+        pathType: Prefix
+      - backend:
+          service:
+            name: hello-blog
+            port: 
+              number: 5424
+        path: /Abp/
+        pathType: Prefix
+      - backend:
+          service:
+            name: my-zipkin-ui
+            port:
+              number: 8080
+        path: /(zipkin-ui/.*)
+
+        pathType: Prefix
+      - backend:
+          service:
+            name: hello-blog
+            port:
+              number: 5424
+        path: /Blogging/Admin/Blogs
+        pathType: Prefix
+      - backend:
+          service:
+            name: dapr-dashboard
+            port:
+              number: 8080
+        path: /dashboard(/|$)(.*)
+        pathType: Prefix
