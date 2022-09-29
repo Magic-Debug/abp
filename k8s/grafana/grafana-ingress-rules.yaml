@@ -1,0 +1,21 @@
+# grafana ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+   name: grafana-ingress
+   namespace: ingress-nginx
+   labels:
+    app: grafana-app
+   annotations:
+     metadata.annotations.kubernetes.io/ingress.class: "nginx"
+spec:
+   rules:
+     http:
+       paths:
+       - backend:
+          service:
+            name: ingress-nginx/grafana
+            port: 
+             number: 3000
+         path: /
+         pathType: Prefix

@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: blog-ingress
-  namespace: awesome
+  namespace: default
   labels:
     app: blog-app
   annotations:
@@ -18,21 +18,14 @@ spec:
       paths:
       - backend:
           service:
-            name: my-minio
-            port: 
-             number: 9001
-        path: /minio-ui
-        pathType: Prefix
-      - backend:
-          service:
             name: hello-blog
             port: 
              number: 5424
-        path: /api/blogging
+        path: /api/
         pathType: Prefix
       - backend:
           service:
-            name: hello-blog
+            name: default/hello-blog
             port: 
              number: 5424
         path: /__bundles
@@ -51,14 +44,7 @@ spec:
               number: 5424
         path: /Abp/
         pathType: Prefix
-      - backend:
-          service:
-            name: my-zipkin-ui
-            port:
-              number: 8080
-        path: /(zipkin-ui/.*)
 
-        pathType: Prefix
       - backend:
           service:
             name: hello-blog
@@ -66,10 +52,4 @@ spec:
               number: 5424
         path: /Blogging/Admin/Blogs
         pathType: Prefix
-      - backend:
-          service:
-            name: dapr-dashboard
-            port:
-              number: 8080
-        path: /dashboard(/|$)(.*)
-        pathType: Prefix
+

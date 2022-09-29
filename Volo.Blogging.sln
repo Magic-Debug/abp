@@ -91,7 +91,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{12613FA7-888E-4ABE-BC64-E717D5F56BDB}"
 	ProjectSection(SolutionItems) = preProject
 		k8s\grafana\grafana-deploy-svc.yaml = k8s\grafana\grafana-deploy-svc.yaml
-		k8s\grafana\grafana-ing.yaml = k8s\grafana\grafana-ing.yaml
+		k8s\grafana\grafana-ingress-rules.yaml = k8s\grafana\grafana-ingress-rules.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "busybox", "busybox", "{7F5823A2-6E70-488C-A691-2C33C051918D}"
