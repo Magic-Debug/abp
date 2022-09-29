@@ -10,7 +10,7 @@ metadata:
      metadata.annotations.kubernetes.io/ingress.class: "nginx"
 spec:
    rules:
-     http:
+    - http:
        paths:
        - backend:
           service:
