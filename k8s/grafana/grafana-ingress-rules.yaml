@@ -14,7 +14,7 @@ spec:
        paths:
        - backend:
           service:
-            name: ingress-nginx/grafana
+            name: grafana
             port: 
              number: 3000
          path: /
