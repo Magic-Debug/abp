@@ -23,6 +23,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.AspNetCore.WebClientInfo;
+using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.BlobStoring;
@@ -32,6 +33,7 @@ using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.Threading;
 using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
@@ -81,6 +83,19 @@ public class BloggingTestAppModule : AbpModule
         Configure<AbpDbContextOptions>(options =>
         {
             options.UseMySQL();
+        });
+        Configure<AbpMultiTenancyOptions>(options =>
+        {
+            options.IsEnabled = false;
+        });
+        Configure<AbpAuditingOptions>(options =>
+        {
+            options.IsEnabledForGetRequests = true;
+            options.ApplicationName = "Blog-App";
+        });
+        Configure<AbpDistributedCacheOptions>(options =>
+        {
+            options.KeyPrefix = "Blog:";
         });
         if (1==2)//!hostingEnvironment.IsDevelopment())
         {
