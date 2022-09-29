@@ -38,6 +38,8 @@ public class HomeController : AbpController
     public ActionResult Info()
     {
         var env = new {
+            TimeZone = TimeZoneInfo.Local,
+            DateTime.Now,
             Environment.MachineName,
             Environment.ProcessId,
             Environment.OSVersion,
@@ -57,6 +59,22 @@ public class HomeController : AbpController
         return Json(new {
             HostName = entry.HostName,
             Address = entry.AddressList.Select(address => address.ToString())
+        });
+    }
+
+    [HttpGet("api/headers")]
+    public ActionResult Headers()
+    {
+        var localIpAddress = Request.HttpContext.Connection.LocalIpAddress.ToString();
+        var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+        return Json(new {
+            HostName = Request.Headers,
+            Request.Method,
+            Request.QueryString,
+            Connection = new {
+                Local = $"{localIpAddress}:{Request.HttpContext.Connection.LocalPort}",
+                Remote = $"{remoteIpAddress}:{Request.HttpContext.Connection.RemotePort}"
+            }
         });
     }
 }
